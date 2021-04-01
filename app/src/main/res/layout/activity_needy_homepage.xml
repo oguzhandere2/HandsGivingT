@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/topa"
+    tools:context=".Homepage">
+
+
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="413dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="168dp"
+        android:background="@drawable/noyar"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_image4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/homepage_text7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="185dp"
+        android:text="TAMİRAT"
+        android:textAllCaps="true"
+        android:textColor="#0E9C2A"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_image4"
+        app:layout_constraintStart_toStartOf="@+id/imageView5" />
+
+    <TextView
+        android:id="@+id/homepage_text6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="185dp"
+        android:text="BEKLIYOR"
+        android:textAllCaps="true"
+        android:textColor="#490404"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_image4"
+        app:layout_constraintStart_toEndOf="@+id/homepage_text2" />
+
+    <Button
+        android:id="@+id/nhomepagei3"
+        android:layout_width="62dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="184dp"
+        android:background="@drawable/iptab"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_image4"
+        app:layout_constraintStart_toEndOf="@+id/homepage_text3" />
+
+    <Button
+        android:id="@+id/homepage_button9"
+        android:layout_width="54dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="185dp"
+        android:background="@drawable/detb"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_image4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/nhomepagei" />
+
+    <ImageView
+        android:id="@+id/homepage_image4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp"
+        android:src="@drawable/botbarc"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/homepage_button7"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="88dp"
+        android:layout_height="87dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/anas"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/homepage_button8"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toEndOf="@+id/homepage_button6" />
+
+    <Button
+        android:id="@+id/homepage_button8"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="71dp"
+        android:layout_height="67dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/profilb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/homepage_button6"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="72dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/siparisb"
+        android:focusable="auto"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <Button
+        android:id="@+id/homepage_button1"
+        android:layout_width="59dp"
+        android:layout_height="50dp"
+        android:background="@drawable/set"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_image1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.934"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.458" />
+
+
+    <ImageView
+        android:id="@+id/homepage_image1"
+        android:layout_width="421dp"
+        android:layout_height="80dp"
+        android:background="@drawable/topaa"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="@+id/homepage_button3"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/homepage_button2"
+        android:layout_width="79dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/deg"
+        app:layout_constraintBottom_toBottomOf="@+id/homepage_image1"
+        app:layout_constraintEnd_toStartOf="@+id/homepage_button3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/needyReq"
+        android:layout_width="68dp"
+        android:layout_height="61dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/yarrrrr"
+        app:layout_constraintBottom_toBottomOf="@+id/homepage_image1"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="413dp"
+        android:layout_height="57dp"
+        android:background="@drawable/bekyy"
+        app:layout_constraintBottom_toTopOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="413dp"
+        android:layout_height="57dp"
+        android:background="@drawable/okyara"
+        app:layout_constraintBottom_toTopOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/nhomepagei"
+        android:layout_width="62dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginBottom="245dp"
+        android:background="@drawable/iptab"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_image4"
+        app:layout_constraintStart_toEndOf="@+id/homepage_text3" />
+
+    <Button
+        android:id="@+id/homepage_button4"
+        android:layout_width="54dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="245dp"
+        android:background="@drawable/detb"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_image4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/nhomepagei" />
+
+    <TextView
+        android:id="@+id/homepage_text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="245dp"
+        android:text="HAKAN KARAAĞAÇ"
+        android:textAllCaps="true"
+        android:textColor="#036E1E"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_image4"
+        app:layout_constraintStart_toEndOf="@+id/homepage_text2" />
+
+    <TextView
+        android:id="@+id/homepage_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="245dp"
+        android:text="MARKET"
+        android:textAllCaps="true"
+        android:textColor="#0E9C2A"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_image4"
+        app:layout_constraintStart_toStartOf="@+id/imageView5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

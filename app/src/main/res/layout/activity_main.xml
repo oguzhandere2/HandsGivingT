@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/image4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
@@ -21,19 +21,19 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/homepage_button7"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="88dp"
         android:layout_height="87dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/anas"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/homepage_button8"
         app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toEndOf="@+id/button2" />
+        app:layout_constraintStart_toEndOf="@+id/homepage_button6" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/homepage_button8"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="71dp"
         android:layout_height="67dp"
@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/homepage_button6"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="72dp"
         android:layout_height="67dp"
