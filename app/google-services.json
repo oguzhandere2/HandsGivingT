@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "188702242151",
+    "project_id": "handsgiving-ce5bd",
+    "storage_bucket": "handsgiving-ce5bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188702242151:android:84cab0023d9173a5cdabc2",
+        "android_client_info": {
+          "package_name": "com.example.handsgivingt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "188702242151-hm75nhf8la6gr9ao82647u99u3svmvbd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.handsgivingt",
+            "certificate_hash": "1ea521c361ae6b6bcd4ea23167762cfd3161e03f"
+          }
+        },
+        {
+          "client_id": "188702242151-q1d4oq989078tqjmbbot3352hl9e8aio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMQelsDa6N8XRvnUVLrQy2wIWAaDu3IpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "188702242151-q1d4oq989078tqjmbbot3352hl9e8aio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
