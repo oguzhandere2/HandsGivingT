@@ -14,6 +14,7 @@ public class NeedyRequest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_needy_request);
 
+        Button locationButton = findViewById(R.id.button5);
         Button socialButton = findViewById(R.id.helprequest_button6);
         Button homePageButton = findViewById(R.id.helprequest_button7);
         Button profileButton = findViewById(R.id.helprequest_button8);
@@ -45,6 +46,16 @@ public class NeedyRequest extends AppCompatActivity {
                                              public void onClick(View view)
                                              {
                                                  Intent intent = new Intent( NeedyRequest.this, Profile.class);
+                                                 startActivity( intent);
+                                             }
+                                         }
+        );
+        locationButton.setOnClickListener(new View.OnClickListener()
+                                         {
+                                             @Override
+                                             public void onClick(View view)
+                                             {
+                                                 Intent intent = new Intent( NeedyRequest.this, LocationProvider.class);
                                                  startActivity( intent);
                                              }
                                          }

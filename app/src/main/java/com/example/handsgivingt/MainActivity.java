@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
 
         if( user != null){
-            Intent intent = new Intent(MainActivity.this, Homepage.class);
+            Intent intent = new Intent(MainActivity.this, NeedyHomepage.class);
             startActivity(intent);
         }
     }
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Intent intent = new Intent( MainActivity.this, Homepage.class);
+                Intent intent = new Intent( MainActivity.this, NeedyHomepage.class);
                 startActivity( intent);
                 finish();
             }
