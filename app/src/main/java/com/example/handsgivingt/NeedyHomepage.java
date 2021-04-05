@@ -16,7 +16,18 @@ public class NeedyHomepage extends AppCompatActivity {
         Button socialButton = findViewById(R.id.homepage_button6);
         Button profileButton = findViewById(R.id.homepage_button8);
         Button reqBB = findViewById(R.id.needyReq);
+        Button feedbackButton = findViewById(R.id.homepage_button2);
 
+        feedbackButton.setOnClickListener(new View.OnClickListener()
+                                        {
+                                            @Override
+                                            public void onClick(View view)
+                                            {
+                                                Intent intent = new Intent( NeedyHomepage.this, FeedbackUser.class);
+                                                startActivity( intent);
+                                            }
+                                        }
+        );
         socialButton.setOnClickListener(new View.OnClickListener()
                                         {
                                             @Override
