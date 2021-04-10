@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,18 +16,42 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.functions.FirebaseFunctions;
+
+
+
 public class Profile extends AppCompatActivity {
 
     ListView listView;
+    private FirebaseFunctions mFunctions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        mFunctions = FirebaseFunctions.getInstance();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String emailo = "";
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+                emailo = profile.getEmail();
+            }
+        }
+        else
+        {
+            emailo = "fdsfsd";
+        }
+
         listView = findViewById(R.id.completedRequests);
 
         ArrayList<String> elements = new ArrayList<String>();
-        elements.add("Bilkent1/F1 Blok/Market");
+        elements.add(emailo);
+        //elements.add("Bilkent1/F1 Blok/Market");
         elements.add("Bilkent3/Ümit Sitesi");
         elements.add("Bilkent2/Yaşam Sitesi A2");
         elements.add("İncek/432. Sokak");

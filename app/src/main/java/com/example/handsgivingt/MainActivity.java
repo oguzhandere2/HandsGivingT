@@ -27,6 +27,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(MainActivity.this,"signInWithCredential:failure",Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -136,6 +137,14 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
+                /*FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String typeU = "";
+                if (user != null) {
+                    for (UserInfo profile : user.getProviderData()) {
+                        typeU = profile.getUserType();
+                    }
+                }*/
+
                 Intent intent = new Intent( MainActivity.this, NeedyHomepage.class);
                 startActivity( intent);
                 finish();
