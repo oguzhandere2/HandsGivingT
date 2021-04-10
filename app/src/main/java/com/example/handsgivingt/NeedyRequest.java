@@ -56,6 +56,7 @@ public class NeedyRequest extends AppCompatActivity {
                                              public void onClick(View view)
                                              {
                                                  Intent intent = new Intent( NeedyRequest.this, LocationProvider.class);
+                                                 intent.putExtra("FROM_ACTIVITY", "NeedyRequest");
                                                  startActivity( intent);
                                              }
                                          }

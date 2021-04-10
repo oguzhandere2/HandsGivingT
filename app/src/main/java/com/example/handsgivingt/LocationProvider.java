@@ -33,6 +33,7 @@ public class LocationProvider extends AppCompatActivity implements LocationListe
     private TextView textView_location;
     private String adressOfNeedy;
     private Object Tag;
+    private Location loc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,19 +65,47 @@ public class LocationProvider extends AppCompatActivity implements LocationListe
     }
 
     private void saveAdress() {
-        if( adressOfNeedy == ""){
+        if( adressOfNeedy.equals("")){
             if( location.getText().toString().isEmpty()){
                 Toast.makeText(this, "Herhangi bir adres girmediniz lütfen adres girdikten sonra tekrar deneyiniz ", Toast.LENGTH_SHORT).show();
             }
             else{
                 adressOfNeedy = location.getText().toString();
                 Toast.makeText(this,location.getText().toString() , Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LocationProvider.this, NeedyRequest.class));
+                Intent mIntent = getIntent();
+                String previousActivity= mIntent.getStringExtra("FROM_ACTIVITY");
+                Intent intent;
+                if(previousActivity.equals("SignUp")){
+                    intent = new Intent(LocationProvider.this, SignUp.class);
+                    intent.putExtra("Adress", adressOfNeedy);
+                    startActivity(intent);
+                }
+                else{
+                    intent = new Intent(LocationProvider.this, NeedyRequest.class);
+                    intent.putExtra("Adress", adressOfNeedy);
+                    startActivity(intent);
+                }
+
             }
         }
         else{
             Toast.makeText(this,adressOfNeedy , Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LocationProvider.this, NeedyRequest.class));
+            Intent mIntent = getIntent();
+            String previousActivity= mIntent.getStringExtra("FROM_ACTIVITY");
+            Intent intent;
+            if(previousActivity.equals("SignUp")){
+                intent = new Intent(LocationProvider.this, SignUp.class);
+                intent.putExtra("Latitude", loc.getLatitude());
+                intent.putExtra("Longitude", loc.getLongitude());
+                startActivity(intent);
+
+            }
+            else{
+                intent = new Intent(LocationProvider.this, NeedyRequest.class);
+                intent.putExtra("Latitude", loc.getLatitude());
+                intent.putExtra("Longitude", loc.getLongitude());
+                startActivity(intent);
+            }
         }
     }
 
@@ -97,6 +126,7 @@ public class LocationProvider extends AppCompatActivity implements LocationListe
     public void onLocationChanged(Location location) {
         /*Toast.makeText(this, ""+location.getLatitude()+","+location.getLongitude(), Toast.LENGTH_SHORT).show();*/
         try {
+            loc = location;
             Geocoder geocoder = new Geocoder(LocationProvider.this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
             String address = addresses.get(0).getAddressLine(0);

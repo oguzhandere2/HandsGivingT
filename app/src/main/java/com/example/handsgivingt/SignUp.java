@@ -31,6 +31,10 @@ public class SignUp extends AppCompatActivity {
     private RadioGroup radioGroup;
     private String emailAd;
     private String userType;
+<<<<<<< HEAD
+=======
+    private Button locButton;
+>>>>>>> origin/Fırat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +45,20 @@ public class SignUp extends AppCompatActivity {
         userName = findViewById(R.id.editTextTextPersonName);
         userSurname = findViewById(R.id.editTextTextPersonName2);
         radioGroup = (RadioGroup)findViewById(R.id.radioGroupMode);
+<<<<<<< HEAD
         Button regbutton = findViewById(R.id.kayitolb);
         fStore = FirebaseFirestore.getInstance();
+=======
+        locButton = findViewById(R.id.button8);
+        Button regbutton = findViewById(R.id.kayitolb);
+        fStore = FirebaseFirestore.getInstance();
+        locButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locButtonClicked(v);
+            }
+        });
+>>>>>>> origin/Fırat
         regbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +67,13 @@ public class SignUp extends AppCompatActivity {
         });
 
     }
+
+    private void locButtonClicked(View v) {
+        Intent intent = new Intent( SignUp.this, LocationProvider.class);
+        intent.putExtra("FROM_ACTIVITY", "SignUp");
+        startActivity( intent);
+    }
+
     public void returnSignIn(View view){
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if( user != null){
@@ -79,6 +102,7 @@ public class SignUp extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(emailAd,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
+<<<<<<< HEAD
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -94,6 +118,23 @@ public class SignUp extends AppCompatActivity {
 
                     }
                 });
+=======
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                createUserColl();
+                                Toast.makeText(SignUp.this,
+                                        "Hesap doğrulama linkiniz mail adresinize gönderilmiştir.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+>>>>>>> origin/Fırat
 
 
             }
@@ -113,6 +154,11 @@ public class SignUp extends AppCompatActivity {
         postdata.put("Name", userN);
         postdata.put("Surname",userS);
         postdata.put("UserType", userType);
+<<<<<<< HEAD
+=======
+        Intent mIntent = getIntent();
+        String previousActivity= mIntent.getStringExtra("FROM_ACTIVITY");
+>>>>>>> origin/Fırat
         if( userType.equals("Needy")){
             HashMap<String,Object> needyData = new HashMap<>();
             needyData.put("userMail", emailAd);
