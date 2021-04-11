@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 import com.google.gson.Gson;
@@ -47,11 +48,17 @@ public class NeedyProfile extends AppCompatActivity {
         mFunctions = FirebaseFunctions.getInstance();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+        String emailo = "";
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+                emailo = profile.getEmail();
+            }
+        }
         Map<String, Object> data = new HashMap<>();
-
-        mFunctions.getHttpsCallable("addMessage")
-                .call()
+        data.put("email", emailo);
+        final String finalEmailo = emailo;
+        mFunctions.getHttpsCallable("getCurrentUserInfo")
+                .call(data)
                 .addOnSuccessListener(this, new OnSuccessListener<HttpsCallableResult>() {
                     @Override
                     public void onSuccess(HttpsCallableResult httpsCallableResult) {
@@ -59,7 +66,7 @@ public class NeedyProfile extends AppCompatActivity {
                             Gson g = new Gson();
                             String json = g.toJson(httpsCallableResult.getData());
                             JSONObject jsonObject = new JSONObject(json);
-                            addElements(jsonObject);
+                            addElements(jsonObject, finalEmailo);
                         } catch (Exception e){
                             Log.d("Error",e.toString());
                         }
@@ -95,12 +102,13 @@ public class NeedyProfile extends AppCompatActivity {
 
 
     }
-    private void addElements(JSONObject dat) throws JSONException {
+    private void addElements(JSONObject dat, String email) throws JSONException {
         System.out.println(dat);
-        /*listView = findViewById(R.id.completedRequests);
+        System.out.println(dat.getJSONObject(email).getString("Email"));
+        listView = findViewById(R.id.completedRequests);
         ArrayList<String> elements = new ArrayList<String>();
 
-        elements.add(dat.getString("email"));
+        elements.add(dat.getJSONObject(email).getString("Email"));
         elements.add("Bilkent1/F1 Blok/Market");
         elements.add("Bilkent1/F1 Blok/Market");
         elements.add("Bilkent3/Ümit Sitesi");
@@ -120,7 +128,7 @@ public class NeedyProfile extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),value,Toast.LENGTH_SHORT).show();
 
             }
-        });*/
+        });
     }
 
 }

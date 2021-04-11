@@ -65,48 +65,34 @@ public class LocationProvider extends AppCompatActivity implements LocationListe
     }
 
     private void saveAdress() {
-        if( adressOfNeedy.equals("")){
             if( location.getText().toString().isEmpty()){
                 Toast.makeText(this, "Herhangi bir adres girmediniz lütfen adres girdikten sonra tekrar deneyiniz ", Toast.LENGTH_SHORT).show();
             }
-            else{
+            else if(loc == null)
+            {
+                Toast.makeText(this, "Bulunduğunuz konum tuşuna basınız ", Toast.LENGTH_SHORT).show();
+            }
+            else {
                 adressOfNeedy = location.getText().toString();
-                Toast.makeText(this,location.getText().toString() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, location.getText().toString(), Toast.LENGTH_SHORT).show();
                 Intent mIntent = getIntent();
-                String previousActivity= mIntent.getStringExtra("FROM_ACTIVITY");
+                String previousActivity = mIntent.getStringExtra("FROM_ACTIVITY");
                 Intent intent;
-                if(previousActivity.equals("SignUp")){
+                System.out.println(loc.getLatitude());
+                if (previousActivity.equals("SignUp")) {
                     intent = new Intent(LocationProvider.this, SignUp.class);
-                    intent.putExtra("Adress", adressOfNeedy);
+                    intent.putExtra("Address", adressOfNeedy);
+                    intent.putExtra("Latitude", loc.getLatitude());
+                    intent.putExtra("Longitude", loc.getLongitude());
                     startActivity(intent);
-                }
-                else{
+                } else {
                     intent = new Intent(LocationProvider.this, NeedyRequest.class);
-                    intent.putExtra("Adress", adressOfNeedy);
+                    intent.putExtra("Address", adressOfNeedy);
+                    intent.putExtra("Latitude", loc.getLatitude());
+                    intent.putExtra("Longitude", loc.getLongitude());
                     startActivity(intent);
                 }
-
             }
-        }
-        else{
-            Toast.makeText(this,adressOfNeedy , Toast.LENGTH_SHORT).show();
-            Intent mIntent = getIntent();
-            String previousActivity= mIntent.getStringExtra("FROM_ACTIVITY");
-            Intent intent;
-            if(previousActivity.equals("SignUp")){
-                intent = new Intent(LocationProvider.this, SignUp.class);
-                intent.putExtra("Latitude", loc.getLatitude());
-                intent.putExtra("Longitude", loc.getLongitude());
-                startActivity(intent);
-
-            }
-            else{
-                intent = new Intent(LocationProvider.this, NeedyRequest.class);
-                intent.putExtra("Latitude", loc.getLatitude());
-                intent.putExtra("Longitude", loc.getLongitude());
-                startActivity(intent);
-            }
-        }
     }
 
     @SuppressLint("MissingPermission")

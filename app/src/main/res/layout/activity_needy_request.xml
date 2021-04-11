@@ -70,7 +70,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/requestDesc"
         android:layout_width="343dp"
         android:layout_height="220dp"
         android:layout_marginBottom="24dp"
@@ -85,7 +85,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/helprequest_button2"
+        android:id="@+id/requestButton"
         android:layout_width="164dp"
         android:layout_height="42dp"
         android:layout_marginBottom="8dp"
@@ -95,30 +95,29 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <RadioGroup
-        android:id="@+id/radioGroupMode"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-
-    </RadioGroup>
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="188dp"
         android:layout_height="31dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/neden"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/requestDesc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/requestType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/helprequest_button1"
+        app:layout_constraintVertical_bias="1.0" >
 
     <RadioButton
         android:id="@+id/radioButton"
@@ -129,10 +128,7 @@
         android:text="Maddi Yardım"
         android:textColor="#2D2F31"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/radioButton2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/helprequest_button1"
-        app:layout_constraintVertical_bias="1.0" />
+        />
 
     <RadioButton
         android:id="@+id/radioButton2"
@@ -142,12 +138,9 @@
         android:text="Fiziksel Yardım"
         android:textColor="#FF5722"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/radioGroupMode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toEndOf="@+id/radioButton"
-        app:layout_constraintTop_toBottomOf="@+id/helprequest_button1"
-        app:layout_constraintVertical_bias="1.0" />
+       />
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/button5"
@@ -155,7 +148,7 @@
         android:layout_height="42dp"
         android:layout_marginBottom="8dp"
         android:text="Adres"
-        app:layout_constraintBottom_toTopOf="@+id/helprequest_button2"
+        app:layout_constraintBottom_toTopOf="@+id/requestButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
