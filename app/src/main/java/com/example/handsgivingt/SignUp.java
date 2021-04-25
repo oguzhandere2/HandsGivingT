@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
@@ -121,8 +123,12 @@ public class SignUp extends AppCompatActivity {
 
     }
     public void createUserColl(){
-        String userN = userName.getText().toString();
-        String userS = userSurname.getText().toString();
+
+
+        final String userN = userName.getText().toString();
+        final String userS = userSurname.getText().toString();
+        double def = 0.0;
+
         HashMap<String,Object> postdata = new HashMap<>();
         postdata.put("Email", emailAd);
         postdata.put("Name", userN);
@@ -131,28 +137,36 @@ public class SignUp extends AppCompatActivity {
 
         Intent mIntent = getIntent();
 
-        postdata.put("LocationDesc", mIntent.getStringExtra("Adress"));
-        GeoPoint geo = new GeoPoint(Double.parseDouble(mIntent.getStringExtra("Latitude")),Double.parseDouble(mIntent.getStringExtra("Longitude")));
-        postdata.put("Location",geo );
+        postdata.put("LocationDesc", mIntent.getStringExtra("Address"));
+        postdata.put("Location", new GeoPoint(mIntent.getDoubleExtra("Latitude", def), mIntent.getDoubleExtra("Longitude", def)));
+        postdata.put("AveragePoint", 0);
 
 
-        if( userType.equals("Needy")){
-            HashMap<String,Object> needyData = new HashMap<>();
-            needyData.put("userMail", emailAd);
-
-
-            fStore.collection("Needy").add(needyData);
-        }
-        else{
-            HashMap<String,Object> volData = new HashMap<>();
-            volData.put("AveragePoint",0.0);
-            volData.put("userMail",emailAd);
-            fStore.collection("Volunteer").add(volData);
-        }
         fStore.collection("User").add(postdata).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
             @Override
             public void onSuccess(DocumentReference documentReference) {
 
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+                HashMap<String, Object> profileMap = new HashMap<>();
+                profileMap.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                profileMap.put("name", userN);
+                profileMap.put("surname", userS);
+                profileMap.put("userType", userType);
+                userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(profileMap);
+
+                if(userType == "Needy")
+                {
+
+                    Intent intent = new Intent(SignUp.this, NeedyMainBottomNav.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    //VOLUNTEER YAPILCAK
+                    Intent intent = new Intent(SignUp.this, NeedyMainBottomNav.class);
+                    startActivity(intent);
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

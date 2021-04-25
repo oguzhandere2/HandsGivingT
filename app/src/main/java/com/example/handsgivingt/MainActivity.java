@@ -28,10 +28,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    public static void main(String[] args) {
+        System.out.println("hello world");
+    }
     FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInOptions gso;
@@ -39,16 +49,19 @@ public class MainActivity extends AppCompatActivity {
     CheckBox chBox;
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
+    private FirebaseFunctions mFunctions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         Button sbutton = findViewById(R.id.girisolb);
         SignInButton googleSign = findViewById(R.id.button3);
+        mFunctions = FirebaseFunctions.getInstance();
+
         mAuth = FirebaseAuth.getInstance();
         emailT = findViewById(R.id.editEmailAddress);
         pText = findViewById(R.id.editTextTextPassword);
-
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -71,14 +84,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
     public void checkSignInUser(){
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if( user != null){
-            Intent intent = new Intent(MainActivity.this, NeedyHomepage.class);
-            startActivity(intent);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String emailo = "";
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+                emailo = profile.getEmail();
+            }
         }
+        Map<String, Object> data = new HashMap<>();
+        data.put("email", emailo);
+        final String finalEmailo = emailo;
+        mFunctions.getHttpsCallable("getCurrentUserInfo")
+                .call(data)
+                .addOnSuccessListener(this, new OnSuccessListener<HttpsCallableResult>() {
+                    @Override
+                    public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                        try{
+                            Gson g = new Gson();
+                            String json = g.toJson(httpsCallableResult.getData());
+                            JSONObject jsonObject = new JSONObject(json);
+                            String checker = jsonObject.getJSONObject(finalEmailo).getString("UserType");
+                            if(checker.equals("Needy"))
+                            {
+                                Intent intent = new Intent( MainActivity.this, NeedyMainBottomNav.class);
+                                startActivity( intent);
+                            }
+                            else if(checker.equals("Volunteer"))
+                            {
+                                Intent intent = new Intent( MainActivity.this, NeedyMainBottomNav.class);
+                                startActivity( intent);
+                            }
+
+
+                        } catch (Exception e){
+                            Log.d("Error",e.toString());
+                        }
+                    }
+                });
     }
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -112,9 +158,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent( MainActivity.this, Homepage.class);
-                            startActivity( intent);
+                            checkSignInUser();
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -123,13 +167,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-    public void googleSignInClicked( View view){
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, 2);
-        Intent intent = new Intent( MainActivity.this, Homepage.class);
-        startActivity( intent);
-        finish();
-    }
     public void signInClicked( View view){
         String email = emailT.getText().toString();
         String password = pText.getText().toString();
@@ -137,16 +174,8 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                /*FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String typeU = "";
-                if (user != null) {
-                    for (UserInfo profile : user.getProviderData()) {
-                        typeU = profile.getUserType();
-                    }
-                }*/
 
-                Intent intent = new Intent( MainActivity.this, NeedyHomepage.class);
-                startActivity( intent);
+                checkSignInUser();
                 finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -165,7 +194,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent( MainActivity.this, ForgetPassword.class);
         startActivity( intent);
     }
-
 }
-
-
