@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="6"
+    android:background="@drawable/handsgiving_gradient_1"
+    android:orientation="horizontal"
 
-    >
+    android:weightSum="6">
 
     <TextView
         android:id="@+id/rowPrevRequestType"
@@ -19,7 +19,7 @@
         android:gravity="center"
         android:text="Request Type"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/handsgivingOrange"
+        android:textColor="@color/white"
         app:autoSizeTextType="uniform" />
 
     <TextView
@@ -28,14 +28,13 @@
         android:layout_height="50dp"
         android:layout_weight="3"
         android:background="#2DFFFFFF"
+        android:focusable="false"
         android:gravity="center"
         android:text="Volunteer Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="#A9312C2C"
+        android:textColor="@color/white"
         android:textColorHighlight="#F3721919"
-        android:focusable="false"
         app:autoSizeTextType="none" />
-
 
 
 </LinearLayout>

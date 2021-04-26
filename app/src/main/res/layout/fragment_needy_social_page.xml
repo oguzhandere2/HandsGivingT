@@ -5,33 +5,32 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@drawable/handsgiving_gradient_2">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout_contacts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:background="@drawable/handsgiving_gradient_1">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_contacts"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/handsgivingOrange"
-            >
+            android:background="@drawable/handsgiving_gradient_1">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:text="Contacts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
                     android:layout_centerVertical="true"
-                    >
-                </TextView>
+                    android:text="Contacts"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
 
                 <ImageView
                     android:id="@+id/find_people_btn"
@@ -48,14 +47,13 @@
                     android:id="@+id/notif_btn"
                     android:layout_width="38dp"
                     android:layout_height="40dp"
-                    android:layout_toLeftOf="@+id/find_people_btn"
                     android:layout_marginEnd="12dp"
+                    android:layout_toLeftOf="@+id/find_people_btn"
+                    android:clickable="false"
                     android:src="@drawable/notif"
                     android:visibility="gone"
-                    android:clickable="false"
 
-                    >
-                </ImageView>
+                    ></ImageView>
 
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -64,9 +62,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contact_list"
-        android:layout_below="@+id/app_bar_layout_contacts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar_layout_contacts">
 
     </androidx.recyclerview.widget.RecyclerView>
 

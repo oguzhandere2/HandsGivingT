@@ -11,13 +11,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/handsgiving_gradient_2"
         android:focusable="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
-            android:layout_height="71dp"
-            android:background="@color/handsgivingOrange"
+            android:layout_height="wrap_content"
+            android:background="@drawable/handsgiving_gradient_1"
             android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.242"
@@ -26,8 +27,8 @@
 
             <Button
                 android:id="@+id/evaluate_button"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="38dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="6"
                 android:background="@drawable/deg"
@@ -38,8 +39,8 @@
 
             <Button
                 android:id="@+id/request_help_button"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="38dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="6"
                 android:background="@drawable/yarrrrr"
@@ -50,8 +51,8 @@
 
             <Button
                 android:id="@+id/settings_button"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="38dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/set"
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Beklenen Yardımlar"
-            android:textColor="@color/handsgivingOrange"
+            android:textColor="#005401"
             android:textSize="24sp"
             android:textStyle="italic"
             android:visibility="visible"
@@ -84,8 +85,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10"
-            app:layout_constraintVertical_bias="1.0"
-            >
+            app:layout_constraintVertical_bias="1.0">
 
         </ListView>
 
