@@ -1,5 +1,7 @@
 package com.example.handsgivingt;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,6 +51,9 @@ public class VolunteerHomepageFragment extends Fragment {
     private String mParam2;
     ListView listView;
     private FirebaseFunctions mFunctions;
+    public Context context;
+
+    private FirebaseAuth mAuth;
 
     Button evaluateButton;
     Button askForHelpButton;
@@ -130,7 +135,6 @@ public class VolunteerHomepageFragment extends Fragment {
                 });
 
         evaluateButton = view.findViewById(R.id.evaluate_button);
-        settingsButton = view.findViewById(R.id.settings_button);
         evaluateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
@@ -138,15 +142,29 @@ public class VolunteerHomepageFragment extends Fragment {
             }
         });
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
+        Button signOut = view.findViewById(R.id.cikisButV);
+        mAuth = FirebaseAuth.getInstance();
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Log.wtf("@@@", "settingsbutton CLICKED");
+                signOutClicked(v);
             }
         });
 
 
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    public void signOutClicked(View v){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent( context, MainActivity.class);
+        startActivity( intent);
     }
 
     private void addElements(JSONObject dat, String email, Double lati, Double longi) throws JSONException {

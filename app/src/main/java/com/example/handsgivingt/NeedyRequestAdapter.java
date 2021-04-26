@@ -80,7 +80,7 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
                 final String finalEmailo = volunteerMail;
                 mFunctions.getHttpsCallable("getCurrentUserInfo")
                         .call(data)
-                        .addOnSuccessListener((Executor) this, new OnSuccessListener<HttpsCallableResult>() {
+                        .addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
                             @SuppressLint("SetTextI18n")
                             @Override
                             public void onSuccess(HttpsCallableResult httpsCallableResult) {

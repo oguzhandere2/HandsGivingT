@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 import com.google.gson.Gson;
@@ -38,6 +46,7 @@ public class VolunteerNearRequestAdapter extends ArrayAdapter<JSONObject> {
     //the layout resource file for the list items
     int resource;
     private FirebaseFunctions mFunctions;
+    String emailC;
 
 
     //constructor initializing the values
@@ -46,6 +55,16 @@ public class VolunteerNearRequestAdapter extends ArrayAdapter<JSONObject> {
         this.context = context;
         this.resource = resource;
         this.heroList = heroList;
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String emailo = "";
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+                emailo = profile.getEmail();
+            }
+        }
+
+        this.emailC = emailo;
     }
 
     //this will return the ListView Item as a View
@@ -64,55 +83,32 @@ public class VolunteerNearRequestAdapter extends ArrayAdapter<JSONObject> {
         //getting the view elements of the list from the view
         final TextView textViewRequestype = view.findViewById(R.id.rowRequestType);
         final TextView textViewVolunteerName = view.findViewById(R.id.rowVolunteerName);
-        Button buttonDelete = view.findViewById(R.id.rowRemoveButton);
+        Button buttonAccept = view.findViewById(R.id.rowAcceptButton);
 
         //getting the hero of the specified position
         final JSONObject hero = heroList.get(position);
 
         try {
-            if( hero.getBoolean("Accepted"))
-            {
-                String volunteerMail = hero.getString("volunteerEmail");
-
-                Map<String, Object> data = new HashMap<>();
-                data.put("email", volunteerMail);
-                final String finalEmailo = volunteerMail;
-                mFunctions.getHttpsCallable("getCurrentUserInfo")
-                        .call(data)
-                        .addOnSuccessListener((Executor) this, new OnSuccessListener<HttpsCallableResult>() {
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void onSuccess(HttpsCallableResult httpsCallableResult) {
-                                try{
-                                    Gson g = new Gson();
-                                    String json = g.toJson(httpsCallableResult.getData());
-                                    JSONObject jsonObject = new JSONObject(json);
-                                    textViewVolunteerName.setText(jsonObject.getJSONObject(finalEmailo).getString("Name") + " "+ jsonObject.getJSONObject(finalEmailo).getString("Surname")) ;
-                                    textViewRequestype.setText(hero.getString("RequestType"));
-                                } catch (Exception e){
-                                    Log.d("Error",e.toString());
-                                }
-                            }
-                        });
-            }
-            else
-            {
-                textViewRequestype.setText(hero.getString("RequestType"));
-                textViewVolunteerName.setText(hero.getString("LocationDesc"));
-            }
+            textViewRequestype.setText(hero.getString("RequestType"));
+            textViewVolunteerName.setText(hero.getString("LocationDesc"));
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        //adding a click listener to the button to remove item from the list
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
+
+        String reqID = "";
+        try {
+            reqID = hero.getString("RequestID");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String finalReqID = reqID;
+
+        buttonAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //we will call this method to remove the selected value from the list
-                //we are passing the position which is to be removed in the method
-                //removeHero(position);
-                Log.wtf("@@@@@","REMOVE BUTTON CLICKED");
+                acceptRequest(emailC, finalReqID);
             }
         });
 
@@ -127,41 +123,31 @@ public class VolunteerNearRequestAdapter extends ArrayAdapter<JSONObject> {
         return view;
     }
 
-    //this method will remove the item from the list
-    private void removeHero(final int position) {
-        //Creating an alert dialog to confirm the deletion
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Are you sure you want to delete this?");
+    private void acceptRequest(String email, String reqID) {
+        Map<String,Object> data = new HashMap<>();
 
-        //if the response is positive in the alert
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        data.put("requestID", reqID);
+        data.put("email", email);
 
-                //removing the item
-                heroList.remove(position);
+        mFunctions.getHttpsCallable("acceptRequest")
+                .call(data)
+                .addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+                    @Override
+                    public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                        try{
+                            Toast.makeText(context, "Yardım Kabul Edilmiştir...", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e){
+                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-                //reloading the list
-                notifyDataSetChanged();
-            }
-        });
-
-        //if response is negative nothing is being done
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-
-        //creating and displaying the alert dialog
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });;
     }
 
-    private String getUserName(String userMail)
-    {
-        //To do
-        return "deneme";
-    }
 }

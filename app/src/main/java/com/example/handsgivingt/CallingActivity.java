@@ -22,7 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 
 
-public class CallingActivity extends AppCompatActivity {
+public class
+CallingActivity extends AppCompatActivity {
 
     private TextView nameContact;
     ///private ImageView profileImage;
