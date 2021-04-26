@@ -66,11 +66,11 @@ public class LocationProvider extends AppCompatActivity implements LocationListe
 
     private void saveAdress() {
             if( location.getText().toString().isEmpty()){
-                Toast.makeText(this, "Herhangi bir adres girmediniz lütfen adres girdikten sonra tekrar deneyiniz ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Herhangi bir adres girmediniz lütfen adres girdikten sonra tekrar deneyiniz...", Toast.LENGTH_SHORT).show();
             }
             else if(loc == null)
             {
-                Toast.makeText(this, "Bulunduğunuz konum tuşuna basınız ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Bulunduğunuz konum tuşuna bastıktan sonra tekrar deneyiniz...", Toast.LENGTH_SHORT).show();
             }
             else {
                 adressOfNeedy = location.getText().toString();
@@ -78,7 +78,6 @@ public class LocationProvider extends AppCompatActivity implements LocationListe
                 Intent mIntent = getIntent();
                 String previousActivity = mIntent.getStringExtra("FROM_ACTIVITY");
                 Intent intent;
-                System.out.println(loc.getLatitude());
                 if (previousActivity.equals("SignUp")) {
                     intent = new Intent(LocationProvider.this, SignUp.class);
                     intent.putExtra("Address", adressOfNeedy);

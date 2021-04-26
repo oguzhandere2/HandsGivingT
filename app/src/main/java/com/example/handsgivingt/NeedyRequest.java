@@ -140,12 +140,11 @@ public class NeedyRequest extends AppCompatActivity {
                     @Override
                     public void onSuccess(HttpsCallableResult httpsCallableResult) {
                         try{
-                            Gson g = new Gson();
-                            String json = g.toJson(httpsCallableResult.getData());
-                            JSONObject jsonObject = new JSONObject(json);
-                            System.out.println(jsonObject);
+                            Toast.makeText(NeedyRequest.this, "Yardım Isteğiniz Kaydedilmişir...", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent( NeedyRequest.this, NeedyHomepage.class);
+                            startActivity( intent);
                         } catch (Exception e){
-                            Log.d("Error",e.toString());
+                            Toast.makeText(NeedyRequest.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -156,6 +155,5 @@ public class NeedyRequest extends AppCompatActivity {
                         Toast.makeText(NeedyRequest.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });;
-        System.out.println("-----");
     }
 }

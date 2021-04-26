@@ -123,6 +123,8 @@ public class SignUp extends AppCompatActivity {
     public void createUserColl(){
         String userN = userName.getText().toString();
         String userS = userSurname.getText().toString();
+        double def = 0.0;
+
         HashMap<String,Object> postdata = new HashMap<>();
         postdata.put("Email", emailAd);
         postdata.put("Name", userN);
@@ -131,28 +133,24 @@ public class SignUp extends AppCompatActivity {
 
         Intent mIntent = getIntent();
 
-        postdata.put("LocationDesc", mIntent.getStringExtra("Adress"));
-        GeoPoint geo = new GeoPoint(Double.parseDouble(mIntent.getStringExtra("Latitude")),Double.parseDouble(mIntent.getStringExtra("Longitude")));
-        postdata.put("Location",geo );
+        postdata.put("LocationDesc", mIntent.getStringExtra("Address"));
+        postdata.put("Location", new GeoPoint(mIntent.getDoubleExtra("Latitude", def), mIntent.getDoubleExtra("Longitude", def)));
+        postdata.put("AveragePoint", 0);
 
 
-        if( userType.equals("Needy")){
-            HashMap<String,Object> needyData = new HashMap<>();
-            needyData.put("userMail", emailAd);
-
-
-            fStore.collection("Needy").add(needyData);
-        }
-        else{
-            HashMap<String,Object> volData = new HashMap<>();
-            volData.put("AveragePoint",0.0);
-            volData.put("userMail",emailAd);
-            fStore.collection("Volunteer").add(volData);
-        }
         fStore.collection("User").add(postdata).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
-
+                if(userType == "Needy")
+                {
+                    Intent intent = new Intent(SignUp.this, NeedyHomepage.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Intent intent = new Intent(SignUp.this, Homepage.class);
+                    startActivity(intent);
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

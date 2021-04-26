@@ -132,7 +132,7 @@
         app:layout_constraintStart_toEndOf="@+id/homepage_text3" />
 
     <Button
-        android:id="@+id/homepage_button4"
+        android:id="@+id/acceptReq"
         android:layout_width="54dp"
         android:layout_height="25dp"
         android:layout_marginBottom="16dp"
