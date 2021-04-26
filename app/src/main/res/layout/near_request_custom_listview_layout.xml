@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="6"
+
+    >
+
+    <TextView
+        android:id="@+id/rowRequestType"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="3"
+        android:background="#2DF7F7F7"
+        android:gravity="center"
+        android:text="Request Type"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#E82C1515"
+        android:focusable="false"
+        app:autoSizeTextType="uniform" />
+
+    <TextView
+        android:id="@+id/rowVolunteerName"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_weight="3"
+        android:background="#2DFFFFFF"
+        android:gravity="center"
+        android:text="Volunteer Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="#A9312C2C"
+        android:textColorHighlight="#F3721919"
+        android:focusable="false"
+        app:autoSizeTextType="none" />
+
+    <Button
+        android:id="@+id/rowRemoveButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:background="#FF0000"
+        android:text="Remove" />
+
+</LinearLayout>

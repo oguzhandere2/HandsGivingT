@@ -1,4 +1,4 @@
-package com.example.handsgivingt;
+/*package com.example.handsgivingt;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.Button;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -88,6 +89,10 @@ public class Homepage extends AppCompatActivity {
 
         Button socialButton = findViewById(R.id.homepage_button6);
         Button profileButton = findViewById(R.id.homepage_button8);
+=======
+        Button socialButton = findViewById(R.id.needyhomepage_social_button);
+        Button profileButton = findViewById(R.id.needyhomepage_profile_button);
+>>>>>>> origin/oguzhan
         Button signOut = findViewById(R.id.homepage_button1);
         mAuth = FirebaseAuth.getInstance();
         signOut.setOnClickListener(new View.OnClickListener() {
@@ -180,4 +185,4 @@ public class Homepage extends AppCompatActivity {
                     }
                 });
     }
-}
+}*/

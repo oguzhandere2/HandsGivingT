@@ -83,7 +83,7 @@ public class Profile extends AppCompatActivity {
                                             }
                                         }
         );
-
+/*
         homePageButton.setOnClickListener(new View.OnClickListener()
                                         {
                                             @Override
@@ -93,7 +93,7 @@ public class Profile extends AppCompatActivity {
                                                 startActivity( intent);
                                             }
                                         }
-        );
+        );*/
 
 
 

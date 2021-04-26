@@ -110,15 +110,14 @@ public class MainActivity extends AppCompatActivity {
                             String checker = jsonObject.getJSONObject(finalEmailo).getString("UserType");
                             if(checker.equals("Needy"))
                             {
-                                Intent intent = new Intent( MainActivity.this, NeedyHomepage.class);
+                                Intent intent = new Intent( MainActivity.this, NeedyMainBottomNav.class);
                                 startActivity( intent);
                             }
                             else if(checker.equals("Volunteer"))
                             {
-                                Intent intent = new Intent( MainActivity.this, Homepage.class);
+                                Intent intent = new Intent( MainActivity.this, VolunteerMainBottomNav.class);
                                 startActivity( intent);
                             }
-
 
                         } catch (Exception e){
                             Log.d("Error",e.toString());
@@ -195,5 +194,3 @@ public class MainActivity extends AppCompatActivity {
         startActivity( intent);
     }
 }
-
-

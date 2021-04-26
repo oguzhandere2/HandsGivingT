@@ -14,7 +14,7 @@ public class NeedySocialPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_needy_social_page);
         Button homePageButton = findViewById(R.id.social_button7);
-        Button profileButton = findViewById(R.id.social_button8);
+        Button profileButton = findViewById(R.id.social_button8);/*
         homePageButton.setOnClickListener(new View.OnClickListener()
                                         {
                                             @Override
@@ -24,7 +24,7 @@ public class NeedySocialPage extends AppCompatActivity {
                                                 startActivity( intent);
                                             }
                                         }
-        );
+        );*/
         profileButton.setOnClickListener(new View.OnClickListener()
                                          {
                                              @Override

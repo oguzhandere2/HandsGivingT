@@ -89,7 +89,7 @@ public class NeedyProfile extends AppCompatActivity {
                                             }
                                         }
         );
-
+/*
         homePageButton.setOnClickListener(new View.OnClickListener()
                                           {
                                               @Override
@@ -99,7 +99,7 @@ public class NeedyProfile extends AppCompatActivity {
                                                   startActivity( intent);
                                               }
                                           }
-        );
+        );*/
 
 
 

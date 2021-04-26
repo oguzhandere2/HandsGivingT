@@ -20,19 +20,19 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/homepage_button7"
+        android:id="@+id/needyhomepage_homepage_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="88dp"
         android:layout_height="87dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/anas"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/homepage_button8"
+        app:layout_constraintEnd_toStartOf="@+id/needyhomepage_profile_button"
         app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toEndOf="@+id/homepage_button6" />
+        app:layout_constraintStart_toEndOf="@+id/needyhomepage_social_button" />
 
     <Button
-        android:id="@+id/homepage_button8"
+        android:id="@+id/needyhomepage_profile_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="71dp"
         android:layout_height="67dp"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/homepage_button6"
+        android:id="@+id/needyhomepage_social_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="72dp"
         android:layout_height="67dp"

@@ -38,12 +38,12 @@ public class FeedbackUser extends AppCompatActivity {
     private void returnFeedback() {
         if( feedbackUser.getText().toString().isEmpty() || ratingBar.getRating() == 0.0){
             Toast.makeText(this,"Puanlama yapmayı veya geri bildirim yazmayı unuttunuz. Lütfen kontrol ediniz." , Toast.LENGTH_SHORT).show();
-        }
+        }/*
         else{
             fbUser = feedbackUser.getText().toString();
             rating = ratingBar.getRating();
             startActivity(new Intent( FeedbackUser.this,NeedyHomepage.class));
             finish();
-        }
+        }*/
     }
 }
