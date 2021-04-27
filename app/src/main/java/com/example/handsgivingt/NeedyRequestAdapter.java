@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
@@ -65,15 +70,33 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
         //getting the view elements of the list from the view
         final TextView textViewRequestype = view.findViewById(R.id.rowRequestType);
         final TextView textViewVolunteerName = view.findViewById(R.id.rowVolunteerName);
-        Button buttonDelete = view.findViewById(R.id.rowRemoveButton);
+        Button buttonDelete = view.findViewById(R.id.rowAcceptButton);
 
         //getting the hero of the specified position
         final JSONObject hero = heroList.get(position);
 
+        String reqID = "";
+        try {
+            reqID = hero.getString("RequestID");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String finalReqID = reqID;
+
         try {
             if( hero.getBoolean("Accepted"))
             {
+                buttonDelete.setBackgroundResource(R.drawable.volnearreqbackaccept);
+                buttonDelete.setText("Bitir");
                 String volunteerMail = hero.getString("volunteerEmail");
+
+
+                buttonDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finishRequest(finalReqID);
+                    }
+                });
 
                 Map<String, Object> data = new HashMap<>();
                 data.put("email", volunteerMail);
@@ -95,12 +118,19 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
                                 }
                             }
                         });
-
-
-
             }
             else
             {
+                buttonDelete.setBackgroundResource(R.drawable.neaddel);
+                buttonDelete.setText("Sil");
+
+                buttonDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        deleteRequest(finalReqID);
+                    }
+                });
+
                 textViewRequestype.setText(hero.getString("RequestType"));
                 textViewVolunteerName.setText("Bekliyor");
             }
@@ -109,18 +139,7 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
             e.printStackTrace();
         }
 
-        //adding a click listener to the button to remove item from the list
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //we will call this method to remove the selected value from the list
-                //we are passing the position which is to be removed in the method
-                //removeHero(position);
-                Log.wtf("@@@@@","REMOVE BUTTON CLICKED");
-            }
-        });
 
-        //finally returning the view
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,41 +150,54 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
         return view;
     }
 
-    //this method will remove the item from the list
-    private void removeHero(final int position) {
-        //Creating an alert dialog to confirm the deletion
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Are you sure you want to delete this?");
+    private void finishRequest(String reqID) {
+        Map<String,Object> data = new HashMap<>();
+        data.put("requestID", reqID);
 
-        //if the response is positive in the alert
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        mFunctions.getHttpsCallable("finishRequest")
+                .call(data)
+                .addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+                    @Override
+                    public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                        try{
+                            Toast.makeText(context, "Yardım İsteğiniz Tamamlanmıştır...", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e){
+                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-                //removing the item
-                heroList.remove(position);
-
-                //reloading the list
-                notifyDataSetChanged();
-            }
-        });
-
-        //if response is negative nothing is being done
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-
-        //creating and displaying the alert dialog
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });;
     }
 
-    private String getUserName(String userMail)
-    {
-        //To do
-        return "deneme";
+    private void deleteRequest(String reqID) {
+        Map<String,Object> data = new HashMap<>();
+
+        data.put("requestID", reqID);
+
+        mFunctions.getHttpsCallable("deleteRequest")
+                .call(data)
+                .addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+                    @Override
+                    public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                        try{
+                            Toast.makeText(context, "Yardım İsteğiniz Silinmiştir...", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e){
+                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
