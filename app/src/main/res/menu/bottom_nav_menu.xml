@@ -4,16 +4,16 @@
     <item
         android:id="@+id/navigation_social"
         android:icon="@drawable/ic_baseline_people_24"
-        android:title="Social" />
+        android:title="Sosyal" />
 
     <item
         android:id="@+id/navigation_homepage"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/title_home" />
+        android:title="Anasayfa" />
 
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="Profile" />
+        android:title="Profil" />
 
 </menu>
