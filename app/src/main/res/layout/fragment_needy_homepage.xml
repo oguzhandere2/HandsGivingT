@@ -17,7 +17,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:background="@drawable/handsgiving_gradient_1"
             android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,50 +27,51 @@
 
             <Button
                 android:id="@+id/evaluate_button"
-                android:layout_width="38dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
                 android:layout_weight="6"
                 android:background="@drawable/deg"
-                app:layout_constraintEnd_toStartOf="@+id/request_help_button"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/request_help_button"
-                android:layout_width="38dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
                 android:layout_weight="6"
                 android:background="@drawable/yarrrrr"
-                app:layout_constraintEnd_toStartOf="@+id/settings_button"
+                app:layout_constraintEnd_toStartOf="@+id/cikisButV"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/evaluate_button"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/settings_button"
-                android:layout_width="38dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
+                android:id="@+id/cikisButV"
+                android:layout_width="55dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/set"
+                android:background="@drawable/cikis"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/request_help_button"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/textView10"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/volnearreq"
             android:gravity="center"
-            android:text="Beklenen Yardımlar"
-            android:textColor="#005401"
+            android:text="Beklenen Yardım İstekleri"
+            android:textColor="#1A3C01"
             android:textSize="24sp"
-            android:textStyle="italic"
+            android:textStyle="bold|italic"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
