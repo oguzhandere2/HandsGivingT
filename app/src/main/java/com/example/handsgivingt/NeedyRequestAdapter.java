@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -141,13 +143,48 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
 
 
 
+        String reqType = "";
+        String reqDesc = "";
+        String locDesc = "";
+        Double lati = 0.0;
+        Double longi = 0.0;
+        try {
+            reqType = hero.getString("RequestType");
+            reqDesc = hero.getString("Description");
+            locDesc = hero.getString("LocationDesc");
+            lati = hero.getJSONObject("Location").getDouble("_latitude");
+            longi = hero.getJSONObject("Location").getDouble("_longitude");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        final String finalReqType = reqType;
+        final String finalReqDesc = reqDesc;
+        final Double finalLati = lati;
+        final Double finalLongi = longi;
+        final String finalLocDesc = locDesc;
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.wtf("@@@@@","LIST ITEM CLICKED");
+                Fragment fragment = null;
+                fragment = new RequestDetailFragment(finalReqType, finalReqDesc, finalLati, finalLongi, finalLocDesc);
+                loadFragment(fragment);
             }
         });
         return view;
+    }
+    private boolean loadFragment(Fragment fragment)
+    {
+
+        if (fragment != null) {
+            ((AppCompatActivity)context).getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_host_frame, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 
     private void finishRequest(String reqID) {
