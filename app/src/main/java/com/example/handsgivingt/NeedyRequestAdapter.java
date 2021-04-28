@@ -84,6 +84,8 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
             e.printStackTrace();
         }
         final String finalReqID = reqID;
+        final String[] volunteerName = {""};
+        String requestStatus = "";
 
         try {
             if( hero.getBoolean("Accepted"))
@@ -91,7 +93,7 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
                 buttonDelete.setBackgroundResource(R.drawable.volnearreqbackaccept);
                 buttonDelete.setText("Bitir");
                 String volunteerMail = hero.getString("volunteerEmail");
-
+                requestStatus = "Kabul Edildi";
 
                 buttonDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -113,6 +115,7 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
                                     Gson g = new Gson();
                                     String json = g.toJson(httpsCallableResult.getData());
                                     JSONObject jsonObject = new JSONObject(json);
+                                    volunteerName[0] = jsonObject.getJSONObject(finalEmailo).getString("Name") + " "+ jsonObject.getJSONObject(finalEmailo).getString("Surname");
                                     textViewVolunteerName.setText(jsonObject.getJSONObject(finalEmailo).getString("Name") + " "+ jsonObject.getJSONObject(finalEmailo).getString("Surname")) ;
                                     textViewRequestype.setText(hero.getString("RequestType"));
                                 } catch (Exception e){
@@ -135,6 +138,9 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
 
                 textViewRequestype.setText(hero.getString("RequestType"));
                 textViewVolunteerName.setText("Bekliyor");
+
+                requestStatus = "Bekliyor";
+                volunteerName[0] = "";
             }
 
         } catch (JSONException e) {
@@ -164,11 +170,12 @@ public class NeedyRequestAdapter extends ArrayAdapter<JSONObject> {
         final Double finalLati = lati;
         final Double finalLongi = longi;
         final String finalLocDesc = locDesc;
+        final String finalRequestStatus = requestStatus;
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = null;
-                fragment = new RequestDetailFragment(finalReqType, finalReqDesc, finalLati, finalLongi, finalLocDesc);
+                fragment = new RequestDetailFragment(finalReqType, finalReqDesc, finalLati, finalLongi, finalLocDesc, volunteerName[0], finalRequestStatus);
                 loadFragment(fragment);
             }
         });

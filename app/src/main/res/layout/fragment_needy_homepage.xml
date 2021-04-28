@@ -26,27 +26,16 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/evaluate_button"
-                android:layout_width="80dp"
+                android:id="@+id/request_help_button"
+                android:layout_width="70dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="6"
-                android:background="@drawable/deg"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/request_help_button"
-                android:layout_width="70dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="6"
                 android:background="@drawable/yarrrrr"
                 app:layout_constraintEnd_toStartOf="@+id/cikisButV"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/evaluate_button"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button

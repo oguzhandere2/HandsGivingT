@@ -21,6 +21,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.firebaseui:firebase-ui-storage:6.4.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])

@@ -1,23 +1,37 @@
 package com.example.handsgivingt;
 
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -30,6 +44,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link NeedyProfileFragment#newInstance} factory method to
@@ -41,9 +59,12 @@ public class NeedyProfileFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Button pdegis;
 
     ListView listView;
     TextView userNameSurname, userMail;
+    CircleImageView profilim;
+
     private FirebaseFunctions mFunctions;
 
 
@@ -51,6 +72,11 @@ public class NeedyProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private String currentUserId;
+
+    public Uri imguri;
+    private StorageReference mStorageRef;
 
     public NeedyProfileFragment() {
         // Required empty public constructor
@@ -71,6 +97,7 @@ public class NeedyProfileFragment extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -92,8 +119,10 @@ public class NeedyProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_needy_profile, container, false);
         listView = view.findViewById(R.id.previousHelpsListview);
         userNameSurname = view.findViewById(R.id.userNameSurnameTW);
+        pdegis = view.findViewById(R.id.pdegis);
         userMail = view.findViewById(R.id.userMailTW);
         mFunctions = FirebaseFunctions.getInstance();
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -163,8 +192,55 @@ public class NeedyProfileFragment extends Fragment {
                     }
                 });
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getCurrentUser().getUid();
+        mStorageRef = FirebaseStorage.getInstance().getReference("Images");
+        pdegis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filechooser();
+            }
+        });
 
+        profilim = view.findViewById(R.id.profileImage);
 
+        StorageReference islandRef = mStorageRef.child(currentUserId + ".jpg");
+        final long ONE_MEGABYTE = 1024 * 1024;
+        islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                profilim.setImageBitmap(bmp);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                StorageReference islandRef = mStorageRef.child(currentUserId + ".png");
+                islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        profilim.setImageBitmap(bmp);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        StorageReference islandRef = mStorageRef.child(currentUserId + ".jpeg");
+                        islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                profilim.setImageBitmap(bmp);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                            }
+                        });
+                    }
+                });
+            }
+        });
 
 
         return view;
@@ -175,4 +251,44 @@ public class NeedyProfileFragment extends Fragment {
         userMail.setText(dat.getJSONObject(email).getString("Email"));
     }
 
+
+    private void filechooser()
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
+    }
+
+    private String getExtension(Uri uri){
+        ContentResolver cr = getContext().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType((cr.getType(uri)));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null)
+        {
+            imguri = data.getData();
+            StorageReference Ref = mStorageRef.child(currentUserId + "." + getExtension(imguri));
+
+            Ref.putFile(imguri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(getContext(), "Fotoğraf yüklenmiştir.", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Fotoğraf yüklenemedi.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
+    }
 }

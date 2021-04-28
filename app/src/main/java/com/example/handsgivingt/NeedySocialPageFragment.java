@@ -2,6 +2,8 @@ package com.example.handsgivingt;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 import static org.webrtc.ContextUtils.getApplicationContext;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 /**
@@ -87,7 +93,7 @@ public class NeedySocialPageFragment extends Fragment {
                 final String listUserId = getRef(i).getKey();
                 usersRef.child(listUserId).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists())
                         {
                             String nameStr = dataSnapshot.child("name").getValue().toString();
@@ -95,12 +101,66 @@ public class NeedySocialPageFragment extends Fragment {
                             userName = nameStr + " " + surNameStr;
                             holder.userNameTxt.setText(userName);
 
+                            final String userIdStr = dataSnapshot.child("uid").getValue().toString();
+                            final StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("Images");
+                            StorageReference islandRef = mStorageRef.child(userIdStr + ".jpg");
+                            final long ONE_MEGABYTE = 1024 * 1024;
+                            islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                @Override
+                                public void onSuccess(byte[] bytes) {
+                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    holder.profileImageView.setImageBitmap(bmp);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    StorageReference islandRef = mStorageRef.child(userIdStr + ".png");
+                                    islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                        @Override
+                                        public void onSuccess(byte[] bytes) {
+                                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                            holder.profileImageView.setImageBitmap(bmp);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                            StorageReference islandRef = mStorageRef.child(userIdStr + ".jpeg");
+                                            islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                                @Override
+                                                public void onSuccess(byte[] bytes) {
+                                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                                    holder.profileImageView.setImageBitmap(bmp);
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception exception) {
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+
                         }
                         holder.callBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent( context, CallingActivity.class);
                                 intent.putExtra("visit_user_id", listUserId);
+                                startActivity(intent);
+                            }
+                        });
+                        holder.sendMessageBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                String nameStr = dataSnapshot.child("name").getValue().toString();
+                                String surNameStr = dataSnapshot.child("surname").getValue().toString();
+                                String result = nameStr + " " + surNameStr;
+
+                                Intent intent = new Intent( context, ChatActivity.class);
+                                intent.putExtra("visit_user_id", listUserId);
+                                intent.putExtra("visit_user_name", result);
                                 startActivity(intent);
                             }
                         });
@@ -131,7 +191,7 @@ public class NeedySocialPageFragment extends Fragment {
     public static class ContactsViewHolder extends RecyclerView.ViewHolder
     {
         TextView userNameTxt;
-        Button callBtn;
+        Button callBtn, sendMessageBtn;
         ImageView profileImageView;
 
 
@@ -139,6 +199,7 @@ public class NeedySocialPageFragment extends Fragment {
             super(itemView);
             userNameTxt = itemView.findViewById(R.id.name_contact);
             callBtn = itemView.findViewById(R.id.call_btn);
+            sendMessageBtn = itemView.findViewById(R.id.message_btn);
             profileImageView = itemView.findViewById(R.id.image_contact);
         }
     }

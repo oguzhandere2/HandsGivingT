@@ -86,6 +86,8 @@ public class VolunteerPreviousRequestsAdapter extends ArrayAdapter<JSONObject> {
         String locDesc = "";
         Double lati = 0.0;
         Double longi = 0.0;
+        final String volunteerName = "";
+        final String requestStatus = "Tamamlandı";
         try {
             reqType = hero.getString("RequestType");
             reqDesc = hero.getString("Description");
@@ -106,7 +108,7 @@ public class VolunteerPreviousRequestsAdapter extends ArrayAdapter<JSONObject> {
             @Override
             public void onClick(View v) {
                 Fragment fragment = null;
-                fragment = new RequestDetailFragment(finalReqType, finalReqDesc, finalLati, finalLongi, finalLocDesc);
+                fragment = new RequestDetailFragment(finalReqType, finalReqDesc, finalLati, finalLongi, finalLocDesc, volunteerName, requestStatus);
                 loadFragment(fragment);
             }
         });

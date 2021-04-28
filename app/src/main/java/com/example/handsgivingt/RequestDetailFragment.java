@@ -16,14 +16,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RequestDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class RequestDetailFragment extends Fragment implements OnMapReadyCallback {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -34,28 +29,31 @@ public class RequestDetailFragment extends Fragment implements OnMapReadyCallbac
     private String locationDescription;
     private TextView reqDesc;
     private TextView reqType;
-    private  TextView locDesc;
+    private TextView locDesc;
+    private TextView reqStatus;
+    private String requestStatus;
+    private String volunteerName;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private GoogleMap mMap;
     LatLng ltLng;
 
-    public RequestDetailFragment(String requestType, String description, Double locationLatitude, Double locationLongitude, String locationDescription) {
+    public RequestDetailFragment(String requestType, String description, Double locationLatitude, Double locationLongitude, String locationDescription, String volunteerName, String requestStatus) {
         this.requestType = requestType;
         this.description = description;
         this.locationLatitude = locationLatitude;
         this.locationLongitude = locationLongitude;
         this.locationDescription = locationDescription;
         this.ltLng = new LatLng(locationLatitude, locationLongitude);
-
+        this.volunteerName = volunteerName;
+        this.requestStatus = requestStatus;
     }
 
 
-    public static RequestDetailFragment newInstance(String requestType, String description, Double locationLatitude, Double locationLongitude, String locationDescription) {
-        RequestDetailFragment fragment = new RequestDetailFragment(requestType, description, locationLatitude, locationLongitude, locationDescription);
+    public static RequestDetailFragment newInstance(String requestType, String description, Double locationLatitude, Double locationLongitude, String locationDescription, String volunteerName, String requestStatus) {
+        RequestDetailFragment fragment = new RequestDetailFragment(requestType, description, locationLatitude, locationLongitude, locationDescription, volunteerName, requestStatus);
         /*
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -86,9 +84,20 @@ public class RequestDetailFragment extends Fragment implements OnMapReadyCallbac
         reqType = view.findViewById(R.id.reqTypeTW);
         reqDesc = view.findViewById(R.id.reqExpTW);
         locDesc = view.findViewById(R.id.locExpTW);
+        reqStatus = view.findViewById(R.id.yardımdurtext);
         reqType.setText(requestType);
         reqDesc.setText(description);
         locDesc.setText(locationDescription);
+
+        if(volunteerName == "")
+        {
+            reqStatus.setText(requestStatus);
+        }
+        else
+        {
+            reqStatus.setTextSize(12);
+            reqStatus.setText(volunteerName + " tarafından kabul edilmiştir. İletişim için lütfen sosyal sayfasına geçiş yapınız.");
+        }
         
         return view;
     }

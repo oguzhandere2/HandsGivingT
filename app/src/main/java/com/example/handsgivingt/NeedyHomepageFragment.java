@@ -53,23 +53,11 @@ public class NeedyHomepageFragment extends Fragment {
     private FirebaseAuth mAuth;
 
     public Context context;
-    Button evaluateButton;
     Button askForHelpButton;
-    Button settingsButton;
 
     public NeedyHomepageFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NeedyHomepageFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static NeedyHomepageFragment newInstance(String param1, String param2) {
         NeedyHomepageFragment fragment = new NeedyHomepageFragment();
         Bundle args = new Bundle();
@@ -86,9 +74,6 @@ public class NeedyHomepageFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
     }
 
     @Override
@@ -153,16 +138,7 @@ public class NeedyHomepageFragment extends Fragment {
                     }
                 });
 
-
-
-        evaluateButton = view.findViewById(R.id.evaluate_button);
         askForHelpButton = view.findViewById(R.id.request_help_button);
-        evaluateButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Log.wtf("@@@", "EVAL CLICKED");
-            }
-        });
 
         askForHelpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

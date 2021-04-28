@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,8 +24,12 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class FindPeopleActivity extends AppCompatActivity {
 
@@ -83,8 +89,48 @@ public class FindPeopleActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Contacts, FindFriendsViewHolder> firebaseRecyclerAdapter
                 = new FirebaseRecyclerAdapter<Contacts, FindFriendsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull FindFriendsViewHolder holder, final int position, @NonNull final Contacts model) {
+            protected void onBindViewHolder(@NonNull final FindFriendsViewHolder holder, final int position, @NonNull final Contacts model) {
                 holder.userNameTxt.setText(model.getName() + " " + model.getSurname());
+
+                final String userIdStr = model.getUid();
+                final StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("Images");
+                StorageReference islandRef = mStorageRef.child(userIdStr + ".jpg");
+                final long ONE_MEGABYTE = 1024 * 1024;
+                islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        holder.profileImageView.setImageBitmap(bmp);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        StorageReference islandRef = mStorageRef.child(userIdStr + ".png");
+                        islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                holder.profileImageView.setImageBitmap(bmp);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                StorageReference islandRef = mStorageRef.child(userIdStr + ".jpeg");
+                                islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                    @Override
+                                    public void onSuccess(byte[] bytes) {
+                                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                        holder.profileImageView.setImageBitmap(bmp);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -118,19 +164,20 @@ public class FindPeopleActivity extends AppCompatActivity {
     {
 
         TextView userNameTxt;
-        Button videoCallBtn;
+        Button videoCallBtn, sendMessageBtn;
         ImageView profileImageView;
         RelativeLayout cardView;
-
 
         public FindFriendsViewHolder(@NonNull View itemView) {
             super(itemView);
             userNameTxt = itemView.findViewById(R.id.name_contact);
             cardView = itemView.findViewById(R.id.card_view1);
             videoCallBtn = itemView.findViewById(R.id.call_btn);
+            sendMessageBtn = itemView.findViewById(R.id.message_btn);
             profileImageView = itemView.findViewById(R.id.image_contact);
 
             videoCallBtn.setVisibility(View.GONE);
+            sendMessageBtn.setVisibility(View.GONE);
         }
     }
 

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +21,8 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
@@ -69,10 +75,12 @@ public class NotificationsActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists())
                         {
+
                             String type = dataSnapshot.getValue().toString();
 
                             if(type.equals("received"))
                             {
+
                                 holder.cardView.setVisibility(View.VISIBLE);
                                 usersRef.child(listUserId).addValueEventListener(new ValueEventListener() {
                                     @Override
@@ -82,6 +90,46 @@ public class NotificationsActivity extends AppCompatActivity {
                                         String surNameStr = dataSnapshot.child("surname").getValue().toString();
                                         String result = nameStr + " " + surNameStr;
                                         holder.userNameTxt.setText(result);
+
+                                        final String userIdStr = dataSnapshot.child("uid").getValue().toString();
+                                        final StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("Images");
+                                        StorageReference islandRef = mStorageRef.child(userIdStr + ".jpg");
+                                        final long ONE_MEGABYTE = 1024 * 1024;
+                                        islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                            @Override
+                                            public void onSuccess(byte[] bytes) {
+                                                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                                holder.profileImageView.setImageBitmap(bmp);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception exception) {
+                                                StorageReference islandRef = mStorageRef.child(userIdStr + ".png");
+                                                islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                                    @Override
+                                                    public void onSuccess(byte[] bytes) {
+                                                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                                        holder.profileImageView.setImageBitmap(bmp);
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception exception) {
+                                                        StorageReference islandRef = mStorageRef.child(userIdStr + ".jpeg");
+                                                        islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                                            @Override
+                                                            public void onSuccess(byte[] bytes) {
+                                                                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                                                holder.profileImageView.setImageBitmap(bmp);
+                                                            }
+                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception exception) {
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                        });
 
                                         holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
                                             @Override

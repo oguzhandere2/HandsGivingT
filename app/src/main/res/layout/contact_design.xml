@@ -54,8 +54,21 @@
             android:drawableTop="@drawable/video_call"
             android:drawableTint="@android:color/white"
             android:background="@color/handsgivingOrange"
-            android:layout_centerHorizontal="true"
+            ></Button>
 
+        <Button
+            android:id="@+id/message_btn"
+            android:layout_width="90dp"
+            android:layout_height="43dp"
+            android:layout_below="@+id/name_contact"
+            android:layout_toRightOf="@+id/call_btn"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="14dp"
+            android:padding="5dp"
+            android:drawableTop="@drawable/send_message_btn"
+            android:drawableTint="@android:color/white"
+            android:background="@color/handsgivingOrange"
+            android:layout_centerHorizontal="true"
             ></Button>
 
 

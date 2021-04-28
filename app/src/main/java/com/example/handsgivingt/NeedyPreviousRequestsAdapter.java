@@ -81,7 +81,8 @@ public class NeedyPreviousRequestsAdapter extends ArrayAdapter<JSONObject> {
             e.printStackTrace();
         }
 
-
+        final String volunteerName = "";
+        final String requestStatus = "Tamamlandı";
 
         String reqType = "";
         String reqDesc = "";
@@ -108,7 +109,7 @@ public class NeedyPreviousRequestsAdapter extends ArrayAdapter<JSONObject> {
             @Override
             public void onClick(View v) {
                 Fragment fragment = null;
-                fragment = new RequestDetailFragment(finalReqType, finalReqDesc, finalLati, finalLongi, finalLocDesc);
+                fragment = new RequestDetailFragment(finalReqType, finalReqDesc, finalLati, finalLongi, finalLocDesc, volunteerName, requestStatus);
                 loadFragment(fragment);
             }
         });
