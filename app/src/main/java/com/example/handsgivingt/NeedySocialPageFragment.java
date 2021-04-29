@@ -280,24 +280,6 @@ public class NeedySocialPageFragment extends Fragment {
             }
         });
 
-
-//        findPeopleBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent( ContactsActivity.this, FindPeopleActivity.class);
-//                startActivity( intent);
-//            }
-//        });
-
-//        notificationsBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent( ContactsActivity.this, NotificationsActivity.class);
-//                startActivity( intent);
-//            }
-//        });
-
-
         return view;
     }
 }

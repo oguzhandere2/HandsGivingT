@@ -55,7 +55,7 @@ public class FindPeopleActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (searchET.getText().toString().equals(""))
                 {
-                    Toast.makeText(FindPeopleActivity.this,"Please write a name to search.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(FindPeopleActivity.this,"Lütfen kişinin adını giriniz.",Toast.LENGTH_LONG).show();
                 }
                 else
                 {

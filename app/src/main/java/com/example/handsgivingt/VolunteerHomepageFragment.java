@@ -101,6 +101,8 @@ public class VolunteerHomepageFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_volunteer_homepage, container, false);
         listView = view.findViewById(R.id.pendingHelpRequestsListview);
+        askForHelpButton = view.findViewById(R.id.request_help_button);
+        evaluateButton = view.findViewById(R.id.evaluate_button);
 
         mFunctions = FirebaseFunctions.getInstance();
 

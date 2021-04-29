@@ -155,7 +155,7 @@ public class NotificationsActivity extends AppCompatActivity {
                                                                                         public void onComplete(@NonNull Task<Void> task) {
                                                                                             if(task.isSuccessful())
                                                                                             {
-                                                                                                Toast.makeText(NotificationsActivity.this, "New Contact Saved.", Toast.LENGTH_SHORT).show();
+                                                                                                Toast.makeText(NotificationsActivity.this, "Arkadaş eklenmişitr.", Toast.LENGTH_SHORT).show();
                                                                                             }
                                                                                         }
                                                                                     });
@@ -184,7 +184,7 @@ public class NotificationsActivity extends AppCompatActivity {
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     if(task.isSuccessful())
                                                                     {
-                                                                        Toast.makeText(NotificationsActivity.this, "Friend Request Cancelled.", Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(NotificationsActivity.this, "Arkadaş isteği iptal edilmişir.", Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 }
                                                             });

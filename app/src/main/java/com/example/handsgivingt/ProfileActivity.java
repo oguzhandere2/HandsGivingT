@@ -109,12 +109,12 @@ public class ProfileActivity extends AppCompatActivity {
                     if (requestType.equals("sent"))
                     {
                         currentState = "request_sent";
-                        add_friend.setText("Cancel Friend Request");
+                        add_friend.setText("Arkadaş İsteğini İptal Et");
                     }
                     else if (requestType.equals("received"))
                     {
                         currentState = "request_received";
-                        add_friend.setText("Accept Friend Request");
+                        add_friend.setText("Arkadaş İsteğini Kabul Et");
                         decline_friend_request.setVisibility(View.VISIBLE);
                         decline_friend_request.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -132,7 +132,7 @@ public class ProfileActivity extends AppCompatActivity {
                             if(dataSnapshot.hasChild(receiverUserID))
                             {
                                 currentState = "friends";
-                                add_friend.setText("Delete Contact");
+                                add_friend.setText("Arkadaşı Sil");
                             }
                             else
                             {
@@ -208,7 +208,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                     if(task.isSuccessful())
                                                     {
                                                         currentState = "friends";
-                                                        add_friend.setText("Delete Contact");
+                                                        add_friend.setText("Arkadaşı Sil");
                                                         decline_friend_request.setVisibility(View.GONE);
                                                     }
                                                 }
@@ -237,7 +237,7 @@ public class ProfileActivity extends AppCompatActivity {
                             if(task.isSuccessful())
                             {
                                 currentState = "new";
-                                add_friend.setText("Add Friend");
+                                add_friend.setText("Arkadaş Ekle");
                             }
                         }
                     });
@@ -259,8 +259,8 @@ public class ProfileActivity extends AppCompatActivity {
                             if (task.isSuccessful())
                             {
                                 currentState = "request_sent";
-                                add_friend.setText("Cancel Friend Request");
-                                Toast.makeText(ProfileActivity.this, "Friend Request Sent.", Toast.LENGTH_SHORT).show();
+                                add_friend.setText("Arkadaş İsteğini İptal Et");
+                                Toast.makeText(ProfileActivity.this, "İstek Gönderildi.", Toast.LENGTH_SHORT).show();
 
                             }
                         }

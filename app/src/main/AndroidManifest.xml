@@ -22,18 +22,14 @@
 
         <activity
             android:name=".NeedyMainBottomNav"
-            android:label="@string/title_activity_needy_main_bottom_nav" />
+            android:label="@string/title_activity_needy_main_bottom_nav"
+            android:windowSoftInputMode="adjustPan">></activity>
         <activity
             android:name=".VolunteerMainBottomNav"
-            android:label="MainActivity" />
-        <activity android:name=".Profile" />
-        <activity android:name=".SocialPage" />
+            android:label="MainActivity"
+            android:windowSoftInputMode="adjustPan">></activity>
         <activity android:name=".SignUp" />
-        <activity android:name=".NeedyProfile" />
-        <activity android:name=".NeedySocialPage" />
         <activity android:name=".ForgetPassword" />
-        <activity android:name=".LocationProvider" />
-        <activity android:name=".FeedbackUser" />
         <activity android:name=".CallingActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".NotificationsActivity" />

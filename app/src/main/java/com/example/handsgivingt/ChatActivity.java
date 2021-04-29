@@ -130,7 +130,7 @@ public class ChatActivity extends AppCompatActivity {
         String messageText = MessageInputText.getText().toString();
 
         if (TextUtils.isEmpty(messageText)) {
-            Toast.makeText(this, "first write your message...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lütfen mesajınız giriniz...", Toast.LENGTH_SHORT).show();
         } else {
             String messageSenderRef = "Messages/" + messageSenderID + "/" + messageReceiverID;
             String messageReceiverRef = "Messages/" + messageReceiverID + "/" + messageSenderID;
@@ -152,9 +152,9 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(ChatActivity.this, "Message Sent Successfully...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChatActivity.this, "Mesaj iletilmiştir...", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ChatActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChatActivity.this, "Hata", Toast.LENGTH_SHORT).show();
                     }
                     MessageInputText.setText("");
                 }

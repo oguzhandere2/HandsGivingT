@@ -51,7 +51,7 @@
             android:padding="5dp"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
-            android:text="Accept Friend Request"
+            android:text="Arkadaş İsteğini Kabul Et"
             android:textAllCaps="false"
             android:textSize="13dp"
             ></Button>
@@ -68,7 +68,7 @@
             android:padding="5dp"
             android:background="@android:color/holo_red_light"
             android:textColor="@android:color/white"
-            android:text="Cancel Friend Request"
+            android:text="Arkadaş İsteğini Reddet"
             android:textAllCaps="false"
             android:textSize="13dp"
             ></Button>

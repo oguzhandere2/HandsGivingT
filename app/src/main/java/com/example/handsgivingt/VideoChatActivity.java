@@ -154,7 +154,7 @@ public class VideoChatActivity extends AppCompatActivity implements Session.Sess
         }
         else
         {
-            EasyPermissions.requestPermissions(this, "This app needs mic and camera permission. Please allow.", RC_VIDEO_APP_PERM, perms);
+            EasyPermissions.requestPermissions(this, "Kameraya izin verin.", RC_VIDEO_APP_PERM, perms);
         }
     }
 
