@@ -10,13 +10,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,10 +34,10 @@ import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link VolunteerHomepageFragment#newInstance} factory method to
+ * Use the {@link VolunteerAcceptedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VolunteerHomepageFragment extends Fragment {
+public class VolunteerAcceptedFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,11 +53,7 @@ public class VolunteerHomepageFragment extends Fragment {
 
     private FirebaseAuth mAuth;
 
-    Button evaluateButton;
-    Button askForHelpButton;
-    Button settingsButton;
-
-    public VolunteerHomepageFragment() {
+    public VolunteerAcceptedFragment() {
         // Required empty public constructor
     }
 
@@ -73,8 +66,8 @@ public class VolunteerHomepageFragment extends Fragment {
      * @return A new instance of fragment NeedyHomepageFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static VolunteerHomepageFragment newInstance(String param1, String param2) {
-        VolunteerHomepageFragment fragment = new VolunteerHomepageFragment();
+    public static VolunteerAcceptedFragment newInstance(String param1, String param2) {
+        VolunteerAcceptedFragment fragment = new VolunteerAcceptedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -89,9 +82,6 @@ public class VolunteerHomepageFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
     }
 
     @Override
@@ -99,7 +89,7 @@ public class VolunteerHomepageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_volunteer_homepage, container, false);
+        View view = inflater.inflate(R.layout.fragment_volunteer_accept, container, false);
         listView = view.findViewById(R.id.pendingHelpRequestsListview);
 
         mFunctions = FirebaseFunctions.getInstance();
@@ -111,87 +101,11 @@ public class VolunteerHomepageFragment extends Fragment {
                 emailo = profile.getEmail();
             }
         }
+        final List<JSONObject> requestList = new ArrayList<JSONObject>();
         Map<String, Object> data = new HashMap<>();
         data.put("email", emailo);
         final String finalEmailo = emailo;
-        mFunctions.getHttpsCallable("getCurrentUserInfo")
-                .call(data)
-                .addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
-                    @Override
-                    public void onSuccess(HttpsCallableResult httpsCallableResult) {
-                        try{
-                            Gson g = new Gson();
-                            String json = g.toJson(httpsCallableResult.getData());
-                            JSONObject jsonObject = new JSONObject(json);
-
-                            JSONObject loc = jsonObject.getJSONObject(finalEmailo).getJSONObject("Location");
-                            Double lati = loc.getDouble("_latitude");
-                            Double longi = loc.getDouble("_longitude");
-
-                            addElements(jsonObject, finalEmailo, lati, longi);
-                        } catch (Exception e){
-                            Log.d("Error",e.toString());
-                        }
-                    }
-                });
-
-        Fragment fragment = null;
-        evaluateButton = view.findViewById(R.id.evaluate_button);
-        evaluateButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Fragment fragment = null;
-                fragment = new VolunteerAcceptedFragment();
-                loadFragment(fragment);
-            }
-        });
-
-        Button signOut = view.findViewById(R.id.cikisButV);
-        mAuth = FirebaseAuth.getInstance();
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOutClicked(v);
-            }
-        });
-
-
-        return view;
-    }
-
-    private boolean loadFragment(Fragment fragment)
-    {
-
-        if (fragment != null) {
-            ((AppCompatActivity)context).getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.nav_host_frame, fragment)
-                    .commit();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
-    public void signOutClicked(View v){
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent( context, MainActivity.class);
-        startActivity( intent);
-    }
-
-    private void addElements(JSONObject dat, String email, Double lati, Double longi) throws JSONException {
-        final List<JSONObject> requestList = new ArrayList<JSONObject>();
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("email", email);
-        data.put("latitude", lati);
-        data.put("longitude", longi);
-        final String finalEmailo = email;
-        mFunctions.getHttpsCallable("getNearRequests")
+        mFunctions.getHttpsCallable("getVolunteerOngoingRequests")
                 .call(data)
                 .addOnSuccessListener( new OnSuccessListener<HttpsCallableResult>() {
                     @Override
@@ -217,7 +131,7 @@ public class VolunteerHomepageFragment extends Fragment {
 
                             }
 
-                            VolunteerNearRequestAdapter adapter = new VolunteerNearRequestAdapter(getActivity(), R.layout.near_request_custom_listview_layout, requestList);
+                            VolunteerAcceptAdapter adapter = new VolunteerAcceptAdapter(getActivity(), R.layout.accepted_custom_listview_layout, requestList);
                             listView.setAdapter(adapter);
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                                 @Override
@@ -230,5 +144,13 @@ public class VolunteerHomepageFragment extends Fragment {
                         }
                     }
                 });
+
+        return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 }

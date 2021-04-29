@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/volnearreqback"
+    android:orientation="horizontal"
+
+    android:weightSum="6">
+
+    <TextView
+        android:id="@+id/rowPrevRequestType"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="3"
+        android:background="#2DF7F7F7"
+        android:focusable="false"
+        android:gravity="center"
+        android:text="Request Type"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#E8032E04"
+        app:autoSizeTextType="uniform" />
+
+    <TextView
+        android:id="@+id/rowPrevVolunteerName"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_weight="3"
+        android:background="#2DFFFFFF"
+        android:focusable="false"
+        android:gravity="center"
+        android:text="Volunteer Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="#A9000000"
+        android:textColorHighlight="#F3721919"
+        app:autoSizeTextType="none" />
+
+
+</LinearLayout>

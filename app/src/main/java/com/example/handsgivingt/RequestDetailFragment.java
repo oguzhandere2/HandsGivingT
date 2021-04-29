@@ -93,10 +93,15 @@ public class RequestDetailFragment extends Fragment implements OnMapReadyCallbac
         {
             reqStatus.setText(requestStatus);
         }
-        else
+        else if(requestStatus.equals("Kabul Edildi"))
         {
             reqStatus.setTextSize(12);
             reqStatus.setText(volunteerName + " tarafından kabul edilmiştir. İletişim için lütfen sosyal sayfasına geçiş yapınız.");
+        }
+        else
+        {
+            reqStatus.setTextSize(12);
+            reqStatus.setText(volunteerName + " adlı ihtiyaç sahibiyle görüşmek için sosyal sayfasına geçiş yapınız.");
         }
         
         return view;
