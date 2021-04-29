@@ -2,7 +2,18 @@ package com.example.handsgivingt;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
@@ -23,9 +34,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 
-public class SignUp extends AppCompatActivity {
+public class SignUp extends AppCompatActivity implements LocationListener {
 
     private FirebaseAuth firebaseAuth;
     private EditText emailText,passwordText,userName,userSurname;
@@ -34,6 +47,10 @@ public class SignUp extends AppCompatActivity {
     private String emailAd;
     private String userType;
     private Button locButton;
+    private Location loc;
+    LocationManager locationManager;
+    String userN;
+    String userS;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +64,23 @@ public class SignUp extends AppCompatActivity {
         locButton = findViewById(R.id.button8);
         Button regbutton = findViewById(R.id.kayitolb);
         fStore = FirebaseFirestore.getInstance();
+        loc = null;
+
+        if (ContextCompat.checkSelfPermission(SignUp.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(SignUp.this,new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            },100);
+        }
+
         locButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                locButtonClicked(v);
+                locButton.setText("Konum alınıyor...");
+                //gifView.setVisibility( View.VISIBLE);
+                locButton.setClickable(false);
+
+                getLocation();
             }
         });
         regbutton.setOnClickListener(new View.OnClickListener() {
@@ -62,11 +92,20 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-    private void locButtonClicked(View v) {
-        Intent intent = new Intent( SignUp.this, LocationProvider.class);
-        intent.putExtra("FROM_ACTIVITY", "SignUp");
-        startActivity( intent);
+    @SuppressLint("MissingPermission")
+    private void getLocation() {
+
+        try {
+            locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,5, SignUp.this);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
+
+
 
     public void returnSignIn(View view){
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -80,6 +119,10 @@ public class SignUp extends AppCompatActivity {
         emailAd = emailText.getText().toString();
         String password = passwordText.getText().toString();
         userType = "";
+
+        userN = userName.getText().toString();
+        userS = userSurname.getText().toString();
+
         int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
         if (checkedRadioButtonId == -1) {
             // No item selected
@@ -93,40 +136,48 @@ public class SignUp extends AppCompatActivity {
             }
 
         }
-        firebaseAuth.createUserWithEmailAndPassword(emailAd,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        createUserColl();
-                        Toast.makeText(SignUp.this,
-                                "Hesap doğrulama linkiniz mail adresinize gönderilmiştir.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+        if(userType.matches("") || emailAd.matches("") || password.matches("") || loc == null
+                || userN.matches("") || userS.matches(""))
+        {
+            Toast.makeText(SignUp.this,
+                    "Lütfen bütün bilgileri girdiğinizden emin olun.",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            firebaseAuth.createUserWithEmailAndPassword(emailAd,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                @Override
+                public void onSuccess(AuthResult authResult) {
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            createUserColl();
+                            Toast.makeText(SignUp.this,
+                                    "Hesap doğrulama linkiniz mail adresinize gönderilmiştir.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                    }
-                });
+                        }
+                    });
 
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(SignUp.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
-            }
-        });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(SignUp.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
 
     }
     public void createUserColl(){
 
-
-        final String userN = userName.getText().toString();
-        final String userS = userSurname.getText().toString();
         double def = 0.0;
 
         HashMap<String,Object> postdata = new HashMap<>();
@@ -135,10 +186,8 @@ public class SignUp extends AppCompatActivity {
         postdata.put("Surname",userS);
         postdata.put("UserType", userType);
 
-        Intent mIntent = getIntent();
 
-        postdata.put("LocationDesc", mIntent.getStringExtra("Address"));
-        postdata.put("Location", new GeoPoint(mIntent.getDoubleExtra("Latitude", def), mIntent.getDoubleExtra("Longitude", def)));
+        postdata.put("Location", new GeoPoint(loc.getLatitude(), loc.getLongitude()));
         postdata.put("AveragePoint", 0);
         fStore.collection("User").add(postdata).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
 
@@ -170,5 +219,33 @@ public class SignUp extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        try {
+            loc = location;
+            locButton.setText("Konum başarıyla alındı.");
+            locButton.setTextColor(Color.WHITE);
+            locButton.setBackgroundColor(Color.GREEN);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 }

@@ -100,6 +100,8 @@ public class VolunteerHomepageFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_volunteer_homepage, container, false);
         listView = view.findViewById(R.id.pendingHelpRequestsListview);
+        askForHelpButton = view.findViewById(R.id.request_help_button);
+        evaluateButton = view.findViewById(R.id.evaluate_button);
 
         mFunctions = FirebaseFunctions.getInstance();
 
@@ -134,7 +136,15 @@ public class VolunteerHomepageFragment extends Fragment {
                     }
                 });
 
-        evaluateButton = view.findViewById(R.id.evaluate_button);
+
+        askForHelpButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Log.wtf("@@@", "to be implemented");
+
+            }
+        });
+
         evaluateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button

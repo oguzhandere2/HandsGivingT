@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         Button sbutton = findViewById(R.id.girisolb);
-        SignInButton googleSign = findViewById(R.id.button3);
+
         mFunctions = FirebaseFunctions.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
@@ -71,12 +71,7 @@ public class MainActivity extends AppCompatActivity {
         checkSignInUser();
 
 
-        googleSign.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+
         sbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

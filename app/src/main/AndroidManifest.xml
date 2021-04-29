@@ -23,10 +23,12 @@
 
         <activity
             android:name=".NeedyMainBottomNav"
-            android:label="@string/title_activity_needy_main_bottom_nav"></activity>
+            android:label="@string/title_activity_needy_main_bottom_nav"
+            android:windowSoftInputMode="adjustPan">></activity>
         <activity
             android:name=".VolunteerMainBottomNav"
-            android:label="MainActivity"></activity>
+            android:label="MainActivity"
+            android:windowSoftInputMode="adjustPan">></activity>
         <activity android:name=".Profile" />
         <activity android:name=".SocialPage" />
         <activity android:name=".SignUp" />

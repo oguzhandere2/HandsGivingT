@@ -4,97 +4,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/kaya">
+    android:background="@drawable/handsgiving_gradient_2">
 
 
     <Button
         android:id="@+id/kayitolb"
         android:layout_width="139dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/kay"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:background="@drawable/handsgiving_gradient_1"
+        android:text="Kayıt Ol"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/textView14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button8"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
         android:layout_width="209dp"
         android:layout_height="46dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/isim"
         android:ems="10"
         android:hint="İsim"
         android:inputType="textPersonName"
         android:paddingStart="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupMode" />
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
         android:layout_width="209dp"
         android:layout_height="46dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/soyad"
         android:ems="10"
         android:hint="Soyisim"
         android:inputType="textPersonName"
         android:paddingStart="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/editEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
     <EditText
         android:id="@+id/editEmailAddress"
         android:layout_width="209dp"
         android:layout_height="46dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/emailg"
         android:ems="10"
         android:hint="E-mail"
         android:inputType="textEmailAddress"
         android:paddingStart="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
         android:layout_width="209dp"
         android:layout_height="46dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/sifre"
         android:ems="10"
         android:hint="Şifre"
         android:inputType="textPassword"
         android:paddingStart="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/button8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="411dp"
-        android:layout_height="69dp"
-        android:layout_marginBottom="12dp"
-        android:src="@drawable/hesvar"
-        app:layout_constraintBottom_toTopOf="@+id/girisolbk"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/editEmailAddress" />
 
     <Button
         android:id="@+id/girisolbk"
         android:layout_width="170dp"
         android:layout_height="40dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/girbut"
+        android:background="@drawable/handsgiving_gradient_1"
         android:onClick="returnSignIn"
+        android:text="Giriş Yap"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -106,20 +99,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="24dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/textView13">
 
 
         <RadioButton
             android:id="@+id/radioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="İhtiyaç Sahibi" />
+            android:text="İhtiyaç Sahibi  " />
 
         <RadioButton
             android:id="@+id/radioButton2"
@@ -132,10 +123,36 @@
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Adres"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        android:text="Konumumu Kaydet"
+        app:layout_constraintBottom_toBottomOf="@+id/kayitolb"
         app:layout_constraintEnd_toStartOf="@+id/kayitolb"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/kayitolb" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@drawable/handsgiving_gradient_1"
+        android:gravity="center"
+        android:text="Kayıt Ol"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Zaten Hesabın mı var?"
+        app:layout_constraintBottom_toTopOf="@+id/girisolbk"
+        app:layout_constraintEnd_toEndOf="@+id/girisolbk"
+        app:layout_constraintStart_toStartOf="@+id/girisolbk" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

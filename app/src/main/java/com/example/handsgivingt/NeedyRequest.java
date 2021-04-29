@@ -2,7 +2,9 @@
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
@@ -36,6 +38,10 @@ public class NeedyRequest extends AppCompatActivity {
     private RadioGroup radioGroup;
     private Button requestButton;
     private FirebaseFunctions mFunctions;
+    Context context;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,9 @@ public class NeedyRequest extends AppCompatActivity {
         request = findViewById(R.id.requestDesc);
         requestButton = findViewById(R.id.requestButton);
         mFunctions = FirebaseFunctions.getInstance();
+
+
+
         requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,8 +149,9 @@ public class NeedyRequest extends AppCompatActivity {
                     @Override
                     public void onSuccess(HttpsCallableResult httpsCallableResult) {
                         try{
-                            Toast.makeText(NeedyRequest.this, "Yardım Isteğiniz Kaydedilmişir...", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent( NeedyRequest.this, NeedyHomepage.class);
+                            Toast.makeText(NeedyRequest.this, "Yardım İsteğiniz Kaydedilmiştir", Toast.LENGTH_SHORT).show();
+                            Fragment fragment = new Needy
+                            loadFragment(fragment);
                             startActivity( intent);
                         } catch (Exception e){
                             Toast.makeText(NeedyRequest.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -154,6 +164,6 @@ public class NeedyRequest extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(NeedyRequest.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                });;
+                });
     }
 }*/

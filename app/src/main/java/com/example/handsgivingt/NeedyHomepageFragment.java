@@ -167,7 +167,8 @@ public class NeedyHomepageFragment extends Fragment {
         askForHelpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                Log.wtf("@@@", "askforhelp CLICKED");
+                Fragment fragment = new NewHelpRequest();
+                loadFragment(fragment);
             }
         });
 
@@ -190,7 +191,17 @@ public class NeedyHomepageFragment extends Fragment {
         super.onAttach(context);
         this.context = context;
     }
-
+    private boolean loadFragment(Fragment fragment)
+    {
+        if (fragment != null) {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_host_frame, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
     public void signOutClicked(View v){
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent( context, MainActivity.class);
