@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
@@ -26,7 +32,7 @@ public class
 CallingActivity extends AppCompatActivity {
 
     private TextView nameContact;
-    ///private ImageView profileImage;
+    private ImageView profileImage;
     private ImageView cancelCallBtn, acceptCallBtn;
     private String receiverUserId ="", receiverUserImage="", receiverUserName="", receiverSurName="";
     private String senderUserId ="", senderUserImage="", senderUserName="", senderSurName="", checker="";
@@ -46,6 +52,7 @@ CallingActivity extends AppCompatActivity {
         nameContact = findViewById(R.id.name_calling);
         cancelCallBtn = findViewById(R.id.cancel_call);
         acceptCallBtn = findViewById(R.id.make_call);
+        profileImage = findViewById(R.id.profile_image_calling);
 
         cancelCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,15 +94,95 @@ CallingActivity extends AppCompatActivity {
             {
                 if (dataSnapshot.child(receiverUserId).exists())
                 {
+
                     receiverUserName = dataSnapshot.child(receiverUserId).child("name").getValue().toString();
                     receiverSurName = dataSnapshot.child(receiverUserId).child("surname").getValue().toString();
                     nameContact.setText(receiverUserName + " " + receiverSurName);
+
+                    final String userIdStr = receiverUserId;
+                    final StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("Images");
+                    StorageReference islandRef = mStorageRef.child(userIdStr + ".jpg");
+                    final long ONE_MEGABYTE = 1024 * 1024;
+                    islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            profileImage.setImageBitmap(bmp);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            StorageReference islandRef = mStorageRef.child(userIdStr + ".png");
+                            islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                @Override
+                                public void onSuccess(byte[] bytes) {
+                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    profileImage.setImageBitmap(bmp);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    StorageReference islandRef = mStorageRef.child(userIdStr + ".jpeg");
+                                    islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                        @Override
+                                        public void onSuccess(byte[] bytes) {
+                                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                            profileImage.setImageBitmap(bmp);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
                 }
                 if (dataSnapshot.child(senderUserId).exists())
                 {
                     senderUserName = dataSnapshot.child(senderUserId).child("name").getValue().toString();
                     senderSurName = dataSnapshot.child(senderUserId).child("surname").getValue().toString();
 
+                    final String userIdStr = senderUserId;
+                    final StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("Images");
+                    StorageReference islandRef = mStorageRef.child(userIdStr + ".jpg");
+                    final long ONE_MEGABYTE = 1024 * 1024;
+                    islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            profileImage.setImageBitmap(bmp);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            StorageReference islandRef = mStorageRef.child(userIdStr + ".png");
+                            islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                @Override
+                                public void onSuccess(byte[] bytes) {
+                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    profileImage.setImageBitmap(bmp);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    StorageReference islandRef = mStorageRef.child(userIdStr + ".jpeg");
+                                    islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                        @Override
+                                        public void onSuccess(byte[] bytes) {
+                                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                            profileImage.setImageBitmap(bmp);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
                 }
             }
 

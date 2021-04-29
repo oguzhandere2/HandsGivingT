@@ -209,7 +209,7 @@ public class SignUp extends AppCompatActivity implements LocationListener {
                 }
                 else
                 {
-                    Intent intent = new Intent(SignUp.this, NeedyMainBottomNav.class);
+                    Intent intent = new Intent(SignUp.this, VolunteerMainBottomNav.class);
                     startActivity(intent);
                 }
             }
