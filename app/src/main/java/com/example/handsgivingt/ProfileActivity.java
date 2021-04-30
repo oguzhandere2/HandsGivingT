@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
@@ -52,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
         background_profile_view = findViewById(R.id.background_profile_view);
         name_profile = findViewById(R.id.name_profile);
         add_friend = findViewById(R.id.add_friend);
+
         decline_friend_request = findViewById(R.id.decline_friend_request);
         name_profile.setText(receiverUserName);
 
@@ -110,12 +112,14 @@ public class ProfileActivity extends AppCompatActivity {
                     {
                         currentState = "request_sent";
                         add_friend.setText("Arkadaş İsteğini İptal Et");
+
                     }
                     else if (requestType.equals("received"))
                     {
                         currentState = "request_received";
                         add_friend.setText("Arkadaş İsteğini Kabul Et");
                         decline_friend_request.setVisibility(View.VISIBLE);
+
                         decline_friend_request.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

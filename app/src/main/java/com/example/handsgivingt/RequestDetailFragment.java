@@ -101,7 +101,7 @@ public class RequestDetailFragment extends Fragment implements OnMapReadyCallbac
         else
         {
             reqStatus.setTextSize(12);
-            reqStatus.setText(volunteerName + " adlı ihtiyaç sahibiyle görüşmek için sosyal sayfasına geçiş yapınız.");
+            reqStatus.setText(volunteerName + " ile görüşmek için sosyal sayfasına geçiş yapınız.");
         }
         
         return view;

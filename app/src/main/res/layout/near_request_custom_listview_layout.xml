@@ -18,7 +18,7 @@
         android:background="#00FFFFFF"
         android:focusable="false"
         android:gravity="center"
-        android:text="Request Type"
+        android:text="Yardım Türü"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#E8032E04"
         app:autoSizeTextType="uniform" />
@@ -30,7 +30,7 @@
         android:layout_weight="3"
         android:focusable="false"
         android:gravity="center"
-        android:text="Volunteer Name"
+        android:text="Gönüllü Adı"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="#A9000000"
         android:textColorHighlight="#F3721919"
